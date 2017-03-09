@@ -8,8 +8,4 @@ docker, ansible-container, and docker compose.
 
 Image testing should be done in infosec-dev and then released to prod.
 
-Build Dev:
-  `export AWS_DEFAULT_PROFILE=infosec-dev-write packer build packer.json`
-  
-Build Prod:
-  `export AWS_DEFAULT_PROFILE=infosec-prod-write packer build packer.json`
+There are two scripts: build-dev.sh and build-prod.sh respectively. 

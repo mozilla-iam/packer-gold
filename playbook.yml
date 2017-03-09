@@ -44,6 +44,6 @@
                state=directory
                mode=770
 
-        -   name: Ensure ansible-container on system
-            pip: name=ansible-container
-            tags: docker
+          -   name: Ensure ansible-container on system
+              pip: name=ansible-container
+              tags: docker

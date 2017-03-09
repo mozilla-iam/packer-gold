@@ -34,3 +34,6 @@ build/
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+
+#Don't allow STS Tokens to be committed 
+assume-role-output.txt
