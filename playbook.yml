@@ -1,0 +1,49 @@
+- hosts: localhost
+  name: configuration
+  user: ec2-user
+  become: yes
+  become_user: root
+  gather_facts: true
+
+  tasks:
+          -   name: Install python setup tools
+              yum: name=python-setuptools
+              tags: docker
+
+          -   name: Install git
+              yum: name=git
+              tags: docker
+
+          -   name: Install Pypi
+              easy_install: name=pip
+              tags: docker
+
+          -   name: Install docker-py
+              pip: name=docker-py
+              tags: docker
+
+          -   name: Install Docker
+              yum: name=docker state=latest
+              tags: docker
+
+          -   name: Make sure Docker is running
+              service: name=docker state=running
+              tags: docker
+
+          -   name: Install -> Docker-Compose
+              sudo: yes
+              get_url:
+                url=https://github.com/docker/compose/releases/download/1.11.2/docker-compose-Linux-x86_64
+                dest=/usr/local/bin/docker-compose
+                mode=0755
+
+          -  name: setup directory for mozilla-projects
+             sudo: yes
+             file:
+               path=/opt/mozilla-projects
+               state=directory
+               mode=770
+
+        -   name: Ensure ansible-container on system
+            pip: name=ansible-container
+            tags: docker
