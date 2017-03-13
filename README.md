@@ -6,10 +6,8 @@ docker, ansible-container, and docker compose.
 
 ## Running Packer
 
-Image testing should be done in infosec-dev and then released to prod.
+1. MFA with the desired account.  Any old call will do.
+ * `export AWS_DEFAULT_PROFILE=infosec-dev-admin`
+ * `aws s3 ls`
 
-Build Dev:
-  `export AWS_DEFAULT_PROFILE=infosec-dev-write packer build packer.json`
-  
-Build Prod:
-  `export AWS_DEFAULT_PROFILE=infosec-prod-write packer build packer.json`
+2. ./build-dev.sh

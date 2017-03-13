@@ -1,14 +1,16 @@
 {
   "variables": {
-    "aws_access_key": "",
-    "aws_secret_key": ""
+      "aws_access_key":     "{{env `AWS_ACCESS_KEY_ID`}}",
+      "aws_secret_key":     "{{env `AWS_SECRET_ACCESS_KEY`}}",
+      "aws_security_token": "{{env `AWS_SECURITY_TOKEN`}}"
   },
   "builders": [{
     "type": "amazon-ebs",
+    "region": "us-west-2",
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
-    "region": "us-west-2",
-    "source_ami": "ami-7172b611",
+    "token": "{{user `aws_security_token`}}",
+    "source_ami": "ami-f173cc91",
     "instance_type": "t2.medium",
     "ssh_pty" : "true",
     "ssh_username": "ec2-user",
@@ -24,11 +26,39 @@
       "sudo yum install python-pip -y",
       "sudo yum install python-setuptools -y",
       "sudo yum install -y wget zlib-dev openssl-devel sqlite-devel bzip2-devel python-devel",
-      "sudo pip install ansible",
+      "sudo pip install ansible"
   ]},
+    {
+      "type": "ansible-local",
+      "playbook_file": "./playbook.yml"
+    },
+    {
+     "type": "file",
+     "source": "./files/tags-to-env.sh",
+     "destination": "/home/ec2-user/tags_to_env.sh"
+    },
+    { "type": "shell",
+       "inline": [
+       "sudo mv /home/ec2-user/tags_to_env.sh /usr/local/bin/",
+       "sudo chmod 775 /usr/local/bin/tags_to_env.sh"
+     ]
+   },
    {
-    "type": "ansible-local",
-    "playbook_file": "./playbook.yml"
+    "type": "file",
+    "source": "./files/supervisord",
+    "destination": "/home/ec2-user/supervisord"
+   },
+   {
+    "type": "file",
+    "source": "./files/supervisord.conf",
+    "destination": "/home/ec2-user/supervisord.conf"
+   },
+   { "type": "shell",
+      "inline": [
+      "sudo mv /home/ec2-user/supervisord /etc/init.d/supervisord",
+      "sudo chmod a+x /etc/init.d/supervisord",
+      "sudo mv /home/ec2-user/supervisord.conf /etc/supervisord.conf"
+    ]
    }
  ]
 }
