@@ -10,8 +10,8 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "token": "{{user `aws_security_token`}}",
-    "source_ami": "ami-f173cc91",
-    "instance_type": "t2.medium",
+    "source_ami": "ami-bf4193c7",
+    "instance_type": "t2.large",
     "ssh_pty" : "true",
     "ssh_username": "ec2-user",
     "ami_name": "mozilla_iam_gold_{{timestamp}}"
@@ -26,7 +26,17 @@
       "sudo yum install python-pip -y",
       "sudo yum install python-setuptools -y",
       "sudo yum install -y wget zlib-dev openssl-devel sqlite-devel bzip2-devel python-devel",
-      "sudo pip install ansible"
+      "sudo pip install ansible",
+      "sudo yum install ruby -y",
+      "sudo pip install boto3 --upgrade",
+      "sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_386/amazon-ssm-agent.rpm",
+      "sudo wget https://d1wk0tztpsntt1.cloudfront.net/linux/latest/install",
+      "sudo bash install",
+      "sudo rm install",
+      "wget https://aws-codedeploy-us-west-2.s3.amazonaws.com/latest/install",
+      "sudo chmod +x ./install",
+      "sudo ./install auto",
+      "ssh-keyscan github.com >> /home/ec2-user/.ssh/known_hosts"
   ]},
     {
       "type": "ansible-local",

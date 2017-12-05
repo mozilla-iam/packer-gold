@@ -80,8 +80,5 @@
               sudo: yes
               easy_install: name=supervisor
 
-          -   name: Make sure supervisor will start with system
-              service: name=supervisord enabled=yes
-
           -   name: install credstash
               pip: name=credstash
